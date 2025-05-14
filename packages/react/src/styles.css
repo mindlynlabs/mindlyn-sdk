@@ -1,0 +1,113 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@config "../tailwind.config.js";
+
+@layer theme {
+  #mindlyn {
+    --mindlyn-radius: 0.625rem;
+    --mindlyn-bg: oklch(0.145 0 0);
+    --mindlyn-fg: oklch(0.985 0 0);
+    --mindlyn-primary: oklch(0.985 0 0);
+    --mindlyn-primary-foreground: oklch(0.205 0 0);
+    --mindlyn-secondary: oklch(0.269 0 0);
+    --mindlyn-secondary-foreground: oklch(0.985 0 0);
+    --mindlyn-success: oklch(0.6 0.17 145);
+    --mindlyn-destructive: oklch(0.500 0.141 25.723);
+    --mindlyn-muted-foreground: oklch(0.708 0 0);
+    --mindlyn-ring: oklch(0.439 0 0);
+    
+    @theme inline {
+      --color-background: var(--mindlyn-bg);
+      --color-foreground: var(--mindlyn-fg);
+      --color-card: var(--mindlyn-bg);
+      --color-card-foreground: var(--mindlyn-fg);
+      --color-popover: var(--mindlyn-bg);
+      --color-popover-foreground: var(--mindlyn-fg);
+      --color-primary: var(--mindlyn-primary);
+      --color-primary-foreground: var(--mindlyn-primary-foreground);
+      --color-secondary: var(--mindlyn-secondary);
+      --color-secondary-foreground: var(--mindlyn-secondary-foreground);
+      --color-muted: var(--mindlyn-secondary);
+      --color-muted-foreground: var(--mindlyn-muted-foreground);
+      --color-accent: var(--mindlyn-secondary);
+      --color-accent-foreground: var(--mindlyn-secondary-foreground);
+      --color-success: var(--mindlyn-success);
+      --color-destructive: var(--mindlyn-destructive);
+      --color-border: var(--mindlyn-secondary);
+      --color-input: var(--mindlyn-secondary);
+      --color-ring: var(--mindlyn-ring);
+      --radius-sm: calc(var(--mindlyn-radius) - 4px);
+      --radius-md: calc(var(--mindlyn-radius) - 2px);
+      --radius-lg: var(--mindlyn-radius);
+      --radius-xl: calc(var(--mindlyn-radius) + 4px);
+    }
+  }
+}
+
+
+@layer base {
+  @scope (#mindlyn) {
+    * {
+      @apply border-border outline-ring/50 min-h-0 min-w-0;
+    }
+  }
+}
+
+@layer components {
+  #mindlyn {
+    @apply bg-background text-foreground relative flex flex-col w-full h-full min-h-0 min-w-0 box-border isolate overflow-hidden;
+  }
+}
+
+@layer utilities {
+  @scope (#mindlyn) {
+    & *::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    & *::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    & *::-webkit-scrollbar-thumb {
+      background-color: var(--mindlyn-ring);
+      border-radius: 9999px;
+      background-clip: padding-box;
+      border: 2px solid transparent;
+      transition: background-color 0.3s ease;
+    }
+    
+    & *::-webkit-scrollbar-thumb:hover {
+      background-color: var(--mindlyn-primary);
+    }
+    
+    & * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--mindlyn-ring) transparent;
+    }
+    
+    @keyframes mindlyn-dots {
+      0% {
+        content: '';
+      }
+      33% {
+        content: '.';
+      }
+      66% {
+        content: '..';
+      }
+      100% {
+        content: '...';
+      }
+    }
+    .typing-dots::after {
+      content: '';
+      display: inline-block;
+      width: 1em;
+      text-align: left;
+      animation: mindlyn-dots 2s steps(4, end) infinite;
+    }
+  }
+}

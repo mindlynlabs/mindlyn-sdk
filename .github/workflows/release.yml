@@ -1,0 +1,46 @@
+name: PNPM Monorepo Build & Publish
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js and cache pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          registry-url: https://registry.npmjs.org
+          scope: '@mindlyn'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint all packages
+        run: pnpm run lint
+
+      - name: Build all packages
+        run: pnpm run build
+
+      - name: Publish @mindlyn/react with provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          cd packages/react
+          npm publish --provenance --access public --no-git-checks

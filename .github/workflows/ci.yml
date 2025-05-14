@@ -1,0 +1,36 @@
+name: PNPM Monorepo CI
+
+on:
+  push:
+    branches-ignore:
+      - release
+
+jobs:
+  ci-checks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js and cache pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint all packages
+        run: pnpm run lint
+
+      - name: Build all packages
+        run: pnpm run build

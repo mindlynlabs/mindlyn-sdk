@@ -1,0 +1,43 @@
+# Node modules
+node_modules/
+.pnpm/
+
+# Build output
+dist/
+packages/*/dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# IDE configs
+.vscode
+.idea
+*.sw?
+
+# System files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Env
+.env
+.env.*
+
+# Optional lock files
+package-lock.json
+yarn.lock
+
+# Coverage / test
+coverage/
+*.lcov
+
+# Storybook
+.storybook-out/
+
+# Turbo cache
+.turbo
