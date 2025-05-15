@@ -1,9 +1,8 @@
 name: PNPM Monorepo Build & Publish
 
 on:
-  push:
-    branches:
-      - release
+  release:
+    types: [published]
 
 jobs:
   build-and-publish:
